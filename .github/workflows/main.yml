@@ -12,7 +12,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      contents: write # Bot එකට ගොනු වෙනස් කිරීමට අවශ්‍ය අවසරය
+      contents: write
 
     strategy:
       matrix:
@@ -32,5 +32,10 @@ jobs:
     - name: Install dependencies
       run: npm install
 
+    - name: Configure Git for bot
+      run: |
+        git config user.email "github-actions[bot]@users.noreply.github.com"
+        git config user.name "GitHub Actions Bot"
+      
     - name: Start application
       run: npm start
