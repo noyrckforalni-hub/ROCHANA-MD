@@ -4,12 +4,12 @@
   "description": "A WhatsApp Bot Created By ROCHANA",
   "main": "index.js",
   "scripts": {
-    "start": "pm2 start index.js --deep-monitoring --attach --name SENU-MD",
+    "start": "pm2 start index.js --deep-monitoring --attach --name ROCHANA-MD",
     "stop": "pm2 stop ROCHANA-MD",
     "restart": "pm2 restart ROCHANA-MD"
   },
   "dependencies": {
-    "@whiskeysockets/baileys": "npm:baileys-pro@latest",
+    "@whiskeysockets/baileys": "latest",
     "@adiwajshing/keyed-db": "^0.2.4",
     "@dark-yasiya/yt-dl.js": "1.0.5",
     "@ffmpeg-installer/ffmpeg": "^1.1.0",
