@@ -1,4 +1,4 @@
-name: Node.js CI
+Name: Node.js CI
 
 on:
   push:
@@ -10,7 +10,6 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     strategy:
@@ -25,13 +24,9 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
-        cache: 'npm'
 
     - name: Install dependencies
       run: npm install
 
-    - name: Install missing package
-      run: npm install node-cache
-      
     - name: Start application
       run: npm start
