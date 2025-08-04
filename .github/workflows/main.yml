@@ -11,6 +11,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write # Bot එකට ගොනු වෙනස් කිරීමට අවශ්‍ය අවසරය
 
     strategy:
       matrix:
