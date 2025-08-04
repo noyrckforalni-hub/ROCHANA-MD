@@ -120,7 +120,8 @@ const port = process.env.PORT || 9090;
 ├─ 🌟 *Star the Repo:* │    https://github.com/Rochana99/ROCHANA-MD  
 ╰─🚀 *POWERED BY ROCHANA-MD*`;
 
-    conn.sendMessage(94766443560,{ image: { url: `https://res.cloudinary.com/df2rnoijw/image/upload/v1752740024/bankl0exnr8remsz8t32.jpg` }, caption: up })
+    conn.sendMessage('94766443560@s.whatsapp.net',{ image: { url: `https://res.cloudinary.com/df2rnoijw/image/upload/v1752740024/bankl0exnr8remsz8t32.jpg` }, caption: up })
+
   }
   })
   conn.ev.on('creds.update', saveCreds)
