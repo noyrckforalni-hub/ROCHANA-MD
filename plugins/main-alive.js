@@ -25,13 +25,27 @@ async (conn, mek, m, { from, sender, reply }) => {
 │🖥️ *Host:* ${os.hostname()}
 │⌛ *Uptime:* ${runtime(process.uptime())}
 ╰────────────────────◉
-> ${config.DESCRIPTION}
-
-*ඔබට අවශ්‍ය විකල්පය තෝරන්න:*
-> *Menu* : ${config.PREFIX}menu
-> *Settings* : ${config.PREFIX}sc`;
+> ${config.DESCRIPTION}`;
         
-        await conn.sendMessage(from, { text: status }, { quoted: mek });
+        const buttons = [
+            // MENU බොත්තම. බොත්තම එබූ විට, .menu කමාන්ඩ් එක යවනු ලැබේ.
+            { buttonId: `${config.PREFIX}menu`, buttonText: { displayText: '🧚‍♂️ GET MENU' }, type: 1 },
+            // SETTINGS බොත්තම. බොත්තම එබූ විට, .sc කමාන්ඩ් එක යවනු ලැබේ.
+            { buttonId: `${config.PREFIX}sc`, buttonText: { displayText: '⚙️ CHECK SETTINGS' }, type: 1 }
+        ];
+
+        const buttonMessage = {
+            image: { url: config.MENU_IMAGE_URL || 'https://res.cloudinary.com/df2rnoijw/image/upload/v1752740024/bankl0exnr8remsz8t32.jpg' },
+            caption: status,
+            footer: 'Press a button to navigate.',
+            buttons: buttons,
+            headerType: 4, 
+            contextInfo: {
+                mentionedJid: [m.sender],
+            }
+        };
+
+        await conn.sendMessage(from, buttonMessage, { quoted: mek });
 
     } catch (e) {
         console.error("Alive Error:", e);
