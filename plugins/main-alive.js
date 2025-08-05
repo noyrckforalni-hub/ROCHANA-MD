@@ -25,25 +25,13 @@ async (conn, mek, m, { from, sender, reply }) => {
 │🖥️ *Host:* ${os.hostname()}
 │⌛ *Uptime:* ${runtime(process.uptime())}
 ╰────────────────────◉
-> ${config.DESCRIPTION}`;
+> ${config.DESCRIPTION}
+
+*ඔබට අවශ්‍ය විකල්පය තෝරන්න:*
+> *Menu* : ${config.PREFIX}menu
+> *Settings* : ${config.PREFIX}sc`;
         
-        const buttons = [
-            { buttonId: `${config.PREFIX}menu`, buttonText: { displayText: '🧚‍♂️ GET MENU' }, type: 1 },
-            { buttonId: `${config.PREFIX}sc`, buttonText: { displayText: '⚙️ CHECK SETTINGS' }, type: 1 }
-        ];
-
-        const buttonMessage = {
-            image: { url: config.MENU_IMAGE_URL },
-            caption: status,
-            footer: 'Press a button to navigate.',
-            buttons: buttons,
-            headerType: 4, 
-            contextInfo: {
-                mentionedJid: [m.sender],
-            }
-        };
-
-        await conn.sendMessage(from, buttonMessage, { quoted: mek });
+        await conn.sendMessage(from, { text: status }, { quoted: mek });
 
     } catch (e) {
         console.error("Alive Error:", e);
