@@ -26,10 +26,18 @@ async (conn, mek, m, { from, sender, reply }) => {
 │⌛ *Uptime:* ${runtime(process.uptime())}
 ╰────────────────────◉
 > ${config.DESCRIPTION}`;
+        
+        const buttons = [
+            { buttonId: `${config.PREFIX}menu`, buttonText: { displayText: '🧚‍♂️ GET MENU' }, type: 1 },
+            { buttonId: `${config.PREFIX}sc`, buttonText: { displayText: '⚙️ CHECK SETTINGS' }, type: 1 }
+        ];
 
-        await conn.sendMessage(from, {
+        const buttonMessage = {
             image: { url: config.MENU_IMAGE_URL },
             caption: status,
+            footer: 'CHOOSE BUTTON',
+            buttons: buttons,
+            headerType: 4,
             contextInfo: {
                 mentionedJid: [m.sender],
                 forwardingScore: 1000,
@@ -40,10 +48,12 @@ async (conn, mek, m, { from, sender, reply }) => {
                     serverMessageId: 143
                 }
             }
-        }, { quoted: mek });
+        };
+
+        await conn.sendMessage(from, buttonMessage, { quoted: mek });
 
     } catch (e) {
         console.error("Alive Error:", e);
-        reply(`An error occurred: ${e.message}`);
+        reply(`eror: ${e.message}`);
     }
 });
