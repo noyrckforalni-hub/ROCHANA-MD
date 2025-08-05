@@ -63,7 +63,6 @@ cmd({
     }
 });
 
-// මෙම menuData කොටස ඔබගේ menu.js ෆයිල් එකේ තවදුරටත් තිබිය යුතුය.
 const menuData = {
     '1': {
         title: "📥 *Download Menu* 📥",
@@ -100,5 +99,4 @@ const menuData = {
 > ${config.DESCRIPTION}`,
         image: true
     },
-    // ... all other menu data objects (2 to 10) should be placed here
 };
