@@ -3,7 +3,7 @@ const config = require('../config');
 
 cmd({
     pattern: "menu",
-    desc: "Show interactive menu system with buttons",
+    desc: "Show interactive menu system with a list",
     category: "menu",
     react: "🧾",
     filename: __filename
@@ -24,18 +24,30 @@ cmd({
 ╰──────────────┈⊷
 > *🧚‍♂️𝗥ᴏᴄʜᴀɴᴀ x -𝐁ᴏᴛ🧚‍♂️*`;
 
-        const buttons = [
-            { buttonId: `${config.PREFIX}dmenu`, buttonText: { displayText: '📥 Download Menu' }, type: 1 },
-            { buttonId: `${config.PREFIX}gmenu`, buttonText: { displayText: '👥 Group Menu' }, type: 1 },
-            { buttonId: `${config.PREFIX}fmenu`, buttonText: { displayText: '😄 Fun Menu' }, type: 1 }
+        const sections = [
+            {
+                title: "Choose a Menu Category",
+                rows: [
+                    { title: "📥 Download Menu", rowId: `${config.PREFIX}dmenu` },
+                    { title: "👥 Group Menu", rowId: `${config.PREFIX}gmenu` },
+                    { title: "😄 Fun Menu", rowId: `${config.PREFIX}fmenu` },
+                    { title: "👑 Owner Menu", rowId: `${config.PREFIX}omenu` },
+                    { title: "🤖 AI Menu", rowId: `${config.PREFIX}aimenu` },
+                    { title: "🎎 Anime Menu", rowId: `${config.PREFIX}amenu` },
+                    { title: "🔄 Convert Menu", rowId: `${config.PREFIX}cmenu` },
+                    { title: "📌 Other Menu", rowId: `${config.PREFIX}omenu2` },
+                    { title: "💞 Reactions Menu", rowId: `${config.PREFIX}rmenu` },
+                    { title: "🏠 Main Menu", rowId: `${config.PREFIX}mmenu` }
+                ]
+            }
         ];
 
-        const buttonMessage = {
-            image: { url: config.MENU_IMAGE_URL || 'https://res.cloudinary.com/df2rnoijw/image/upload/v1752740024/bankl0exnr8remsz8t32.jpg' },
-            caption: menuCaption,
-            footer: 'ඔබට අවශ්‍ය menu එක තේරීමට button එකක් ඔබන්න.',
-            buttons: buttons,
-            headerType: 4,
+        const listMessage = {
+            text: menuCaption,
+            footer: 'Select a menu option from the list below.',
+            title: "Rochana Bot Menu",
+            buttonText: "Click Here for Menu",
+            sections,
             contextInfo: {
                 mentionedJid: [m.sender],
                 forwardingScore: 999,
@@ -48,11 +60,8 @@ cmd({
             }
         };
 
-        await conn.sendMessage(from, buttonMessage, { quoted: mek });
+        await conn.sendMessage(from, listMessage, { quoted: mek });
 
-        // Other sub-menu options can be handled via a reply system or a separate command.
-        // For example, you can add a new command like ".menu2" for the rest of the buttons.
-        
     } catch (e) {
         console.error('Menu Error:', e);
         reply(`❌ Menu system is currently busy. Please try again later.\n\n> ${config.DESCRIPTION}`);
