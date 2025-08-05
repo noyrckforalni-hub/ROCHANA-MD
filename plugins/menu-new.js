@@ -99,4 +99,5 @@ const menuData = {
 > ${config.DESCRIPTION}`,
         image: true
     },
+    // ... all other menu data objects (2 to 10) should be placed here
 };
