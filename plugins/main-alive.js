@@ -27,25 +27,36 @@ async (conn, mek, m, { from, sender, reply }) => {
 ╰────────────────────◉
 > ${config.DESCRIPTION}`;
         
-        const buttons = [
-            // MENU බොත්තම. බොත්තම එබූ විට, .menu කමාන්ඩ් එක යවනු ලැබේ.
-            { buttonId: `${config.PREFIX}menu`, buttonText: { displayText: '🧚‍♂️ GET MENU' }, type: 1 },
-            // SETTINGS බොත්තම. බොත්තම එබූ විට, .sc කමාන්ඩ් එක යවනු ලැබේ.
-            { buttonId: `${config.PREFIX}sc`, buttonText: { displayText: '⚙️ CHECK SETTINGS' }, type: 1 }
+        const sections = [
+            {
+                title: "Bot Options",
+                rows: [
+                    {
+                        title: "🧚‍♂️ GET MENU",
+                        rowId: `${config.PREFIX}menu`,
+                        description: "Bot's command menu"
+                    },
+                    {
+                        title: "⚙️ CHECK SETTINGS",
+                        rowId: `${config.PREFIX}sc`,
+                        description: "Bot's configuration settings"
+                    }
+                ]
+            }
         ];
 
-        const buttonMessage = {
-            image: { url: config.MENU_IMAGE_URL || 'https://res.cloudinary.com/df2rnoijw/image/upload/v1752740024/bankl0exnr8remsz8t32.jpg' },
-            caption: status,
-            footer: 'Press a button to navigate.',
-            buttons: buttons,
-            headerType: 4, 
+        const listMessage = {
+            text: status,
+            footer: 'Select an option to navigate.',
+            title: `*${config.BOT_NAME}*`,
+            buttonText: 'Click Here',
+            sections,
             contextInfo: {
                 mentionedJid: [m.sender],
             }
         };
 
-        await conn.sendMessage(from, buttonMessage, { quoted: mek });
+        await conn.sendMessage(from, listMessage, { quoted: mek });
 
     } catch (e) {
         console.error("Alive Error:", e);
