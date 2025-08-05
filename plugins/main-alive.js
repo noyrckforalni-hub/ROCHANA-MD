@@ -13,7 +13,7 @@ cmd({
 },
 async (conn, mek, m, { from, sender, reply }) => {
     try {
-        const status =`
+        const status = `
 ╭───〔 *🤖 ${config.BOT_NAME} STATUS* 〕───◉
 │✨ *Bot is Active & Online!*
 │
@@ -28,7 +28,9 @@ async (conn, mek, m, { from, sender, reply }) => {
 > ${config.DESCRIPTION}`;
         
         const buttons = [
+            // MENU බොත්තම
             { buttonId: `${config.PREFIX}menu`, buttonText: { displayText: '🧚‍♂️ GET MENU' }, type: 1 },
+            // SETTINGS බොත්තම
             { buttonId: `${config.PREFIX}sc`, buttonText: { displayText: '⚙️ CHECK SETTINGS' }, type: 1 }
         ];
 
@@ -41,12 +43,7 @@ async (conn, mek, m, { from, sender, reply }) => {
             contextInfo: {
                 mentionedJid: [m.sender],
                 forwardingScore: 1000,
-                isForwarded: true,
-                forwardedNewsletterMessageInfo: {
-                    newsletterJid: '120363403182346919@newsletter',
-                    newsletterName: 'ROCHANA_MD',
-                    serverMessageId: 143
-                }
+                isForwarded: true
             }
         };
 
