@@ -43,12 +43,7 @@ cmd({
         const contextInfo = {
             mentionedJid: [m.sender],
             forwardingScore: 999,
-            isForwarded: true,
-            forwardedNewsletterMessageInfo: {
-                newsletterJid: '120363403182346919@newsletter',
-                newsletterName: config.OWNER_NAME,
-                serverMessageId: 143
-            }
+            isForwarded: true
         };
 
         const buttonMessage = {
@@ -60,56 +55,7 @@ cmd({
             contextInfo: contextInfo
         };
 
-        const sentMsg = await conn.sendMessage(from, buttonMessage, { quoted: mek });
-        const messageID = sentMsg.key.id;
-
-        const handler = async (msgData) => {
-            try {
-                const receivedMsg = msgData.messages[0];
-                if (!receivedMsg?.message || !receivedMsg.key?.remoteJid) return;
-
-                const isReplyToMenu = receivedMsg.message.extendedTextMessage?.contextInfo?.stanzaId === messageID;
-                
-                if (isReplyToMenu) {
-                    const receivedText = receivedMsg.message.conversation || receivedMsg.message.extendedTextMessage?.text;
-                    const senderID = receivedMsg.key.remoteJid;
-
-                    if (menuData[receivedText]) {
-                        const selectedMenu = menuData[receivedText];
-                        
-                        await conn.sendMessage(
-                            senderID,
-                            { 
-                                image: { url: config.MENU_IMAGE_URL || 'https://res.cloudinary.com/df2rnoijw/image/upload/v1752740024/bankl0exnr8remsz8t32.jpg' },
-                                caption: selectedMenu.content,
-                                contextInfo: contextInfo
-                            },
-                            { quoted: receivedMsg }
-                        );
-
-                        await conn.sendMessage(senderID, { react: { text: '✅', key: receivedMsg.key } });
-
-                    } else {
-                        await conn.sendMessage(
-                            senderID,
-                            {
-                                text: `❌ *Invalid Option!* ❌\nPlease reply with a number from 1-10 to select a menu.`,
-                                contextInfo: contextInfo
-                            },
-                            { quoted: receivedMsg }
-                        );
-                    }
-                }
-            } catch (e) {
-                console.error('Menu handler error:', e);
-            }
-        };
-
-        conn.ev.on("messages.upsert", handler);
-
-        setTimeout(() => {
-            conn.ev.off("messages.upsert", handler);
-        }, 300000);
+        await conn.sendMessage(from, buttonMessage, { quoted: mek });
 
     } catch (e) {
         console.error('Menu Error:', e);
@@ -117,6 +63,7 @@ cmd({
     }
 });
 
+// මෙම menuData කොටස ඔබගේ menu.js ෆයිල් එකේ තවදුරටත් තිබිය යුතුය.
 const menuData = {
     '1': {
         title: "📥 *Download Menu* 📥",
