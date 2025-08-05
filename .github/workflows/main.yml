@@ -17,12 +17,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
-          token: ${{ secrets.REPO_TOKEN }} # නිවැරදි token නම භාවිතා කරයි
+          # මෙතනින් තමයි token එක checkout action එකට දෙන්නේ
+          token: ${{ secrets.REPO_TOKEN }}
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18' # Node.js version එක මෙතන සකසයි
+          node-version: '18'
 
       - name: Install dependencies
         run: npm install
