@@ -25,7 +25,7 @@ cmd({
 │ ✓ 𝐕ᴇʀꜱɪᴏɴ : *5.0.0 Bᴇᴛᴀ*
 │ ✓ 𝐂ᴏᴍᴍᴀɴᴅꜱ : *352*
 ╰━━━━━━━━━━━━━━━┈⊷
-╭━━〔 *🧚‍♂️𝗥ᴏᴄʜᴀɴᴀ x -ᴍᴇɴᴜ🧚‍♂️*  ━┈⊷
+╭━━〔 *🧚‍♂️𝗥ᴏᴄʜᴀɴᴀ x -ᴍᴇɴᴜ🧚‍♂️* ━┈⊷
 ││❯❯ 01 *𝐃ᴏᴡɴʟᴏᴀᴅ ᴍᴇɴᴜ*
 ││❯❯ 02 *𝐆ʀᴏᴜᴘ ᴍᴇɴᴜ*
 ││❯❯ 03 *𝐅ᴜɴ ᴍᴇɴᴜ*
@@ -37,7 +37,11 @@ cmd({
 ││❯❯ 09 *𝐑ᴇᴀᴄᴛɪᴏɴꜱ ᴍᴇɴᴜ*
 ││❯❯ 10 *𝐌ᴀɪɴ ᴍᴇɴᴜ*
 ╰──────────────┈⊷
-> *🧚‍♂️𝗥ᴏᴄʜᴀɴᴀ x -𝐁ᴏᴛ🧚‍♂️*}`;
+> *🧚‍♂️𝗥ᴏᴄʜᴀɴᴀ x -𝐁ᴏᴛ🧚‍♂️*`;
+        
+        const buttons = [
+            { buttonId: `${config.PREFIX}sc`, buttonText: { displayText: '⚙️ CHECK SETTINGS' }, type: 1 }
+        ];
 
         const contextInfo = {
             mentionedJid: [m.sender],
@@ -50,35 +54,40 @@ cmd({
             }
         };
 
-        // Function to send menu image with timeout
-        const sendMenuImage = async () => {
+        // Function to send menu image with buttons
+        const sendMenuWithButtons = async () => {
             try {
                 return await conn.sendMessage(
                     from,
                     {
                         image: { url: config.MENU_IMAGE_URL || 'https://res.cloudinary.com/df2rnoijw/image/upload/v1752740024/bankl0exnr8remsz8t32.jpg' },
                         caption: menuCaption,
+                        footer: 'ලැයිස්තුවෙන් අංකයක් තෝරාගෙන හෝ බොත්තම ඔබා විධානයන් ලබා ගන්න.',
+                        buttons: buttons,
+                        headerType: 4,
                         contextInfo: contextInfo
                     },
                     { quoted: mek }
                 );
             } catch (e) {
-                console.log('Image send failed, falling back to text');
+                console.log('Image send failed, falling back to text with buttons');
                 return await conn.sendMessage(
                     from,
-                    { text: menuCaption, contextInfo: contextInfo },
+                    { 
+                        text: menuCaption,
+                        footer: 'ලැයිස්තුවෙන් අංකයක් තෝරාගෙන හෝ බොත්තම ඔබා විධානයන් ලබා ගන්න.',
+                        buttons: buttons,
+                        headerType: 1, // TEXT header
+                        contextInfo: contextInfo
+                    },
                     { quoted: mek }
                 );
             }
         };
 
-        // Send image with timeout
         let sentMsg;
         try {
-            sentMsg = await Promise.race([
-                sendMenuImage(),
-                new Promise((_, reject) => setTimeout(() => reject(new Error('Image send timeout')), 10000))
-            ]);
+            sentMsg = await sendMenuWithButtons();
         } catch (e) {
             console.log('Menu send error:', e);
             sentMsg = await conn.sendMessage(
@@ -198,7 +207,7 @@ cmd({
 ┃★╭──────────────
 ┃★│ ⚠️ *Restricted*
 ┃★│ • block @user
-┃★│ • unblock @user
+┃┃★│ • unblock @user
 ┃★│ • fullpp [img]
 ┃★│ • setpp [img]
 ┃★│ • restart
@@ -432,7 +441,7 @@ cmd({
                         await conn.sendMessage(
                             senderID,
                             {
-                                text: `❌ *Invalid Option!* ❌\n\nPlease reply with a number between 1-10 to select a menu.\n\n*Example:* Reply with "1" for Download Menu\n\n> ${config.DESCRIPTION}`,
+                                text: `❌ *වැරදි විකල්පයක්!* ❌\n\nකරුණාකර menu එකක් තෝරා ගැනීමට 1-10 අතර අංකයක් සමඟ reply කරන්න.\n\n*උදාහරණය:* "1" ලෙස reply කර Download Menu එක ලබා ගන්න.\n\n> ${config.DESCRIPTION}`,
                                 contextInfo: contextInfo
                             },
                             { quoted: receivedMsg }
@@ -457,7 +466,7 @@ cmd({
         try {
             await conn.sendMessage(
                 from,
-                { text: `❌ Menu system is currently busy. Please try again later.\n\n> ${config.DESCRIPTION}` },
+                { text: `❌ Menu system එක දැනට කාර්යබහුලයි. කරුණාකර නැවත උත්සාහ කරන්න.\n\n> ${config.DESCRIPTION}` },
                 { quoted: mek }
             );
         } catch (finalError) {
