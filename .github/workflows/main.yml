@@ -1,41 +1,38 @@
-name: Node.js CI
+name: Run Bot on GitHub
 
 on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
+  workflow_dispatch:
 
 jobs:
-  build:
+  run-bot:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-
-    strategy:
-      matrix:
-        node-version: [20.x]
+      pull-requests: write
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.REPO_TOKEN }} # නිවැරදි token නම භාවිතා කරයි
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18' # Node.js version එක මෙතන සකසයි
 
-    - name: Install dependencies
-      run: npm install
+      - name: Install dependencies
+        run: npm install
 
-    - name: Configure Git for bot
-      run: |
-        git config user.email "github-actions[bot]@users.noreply.github.com"
-        git config user.name "GitHub Actions Bot"
+      - name: Configure Git for bot
+        run: |
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "GitHub Actions Bot"
       
-    - name: Start application
-      run: npm start
+      - name: Start the Bot
+        run: npm start
+        env:
+          SESSION_ID: ${{ secrets.SESSION_ID }}
