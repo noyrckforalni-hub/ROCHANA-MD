@@ -35,7 +35,7 @@ async (conn, mek, m, { from, sender, reply }) => {
         const buttonMessage = {
             image: { url: config.MENU_IMAGE_URL },
             caption: status,
-            footer: 'CHOOSE BUTTON',
+            footer: 'Press a button to navigate.',
             buttons: buttons,
             headerType: 4,
             contextInfo: {
@@ -54,6 +54,6 @@ async (conn, mek, m, { from, sender, reply }) => {
 
     } catch (e) {
         console.error("Alive Error:", e);
-        reply(`eror: ${e.message}`);
+        reply(`An error occurred: ${e.message}`);
     }
 });
