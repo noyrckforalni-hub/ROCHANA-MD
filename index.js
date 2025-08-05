@@ -880,7 +880,8 @@ ${trueFalseSettings.map((key, index) => `│ ${index + 1}. *${key}:* \`\`\`${con
 }
 
 // Auto restart mechanism (every 5 hours to stay within GitHub Actions limits)
-const autoRestartInterval = 5 * 60 * 60 * 1000;
+const autoRestartInterval = 4 * 60 * 60 * 1000;
+
 
 setInterval(() => {
   try {
