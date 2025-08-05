@@ -1,8 +1,5 @@
-const fs = require('fs');
+const { cmd } = require('../command');
 const config = require('../config');
-const { cmd, commands } = require('../command');
-const { runtime } = require('../lib/functions');
-const axios = require('axios');
 
 cmd({
     pattern: "menu",
@@ -30,16 +27,9 @@ cmd({
         const buttons = [
             { buttonId: `${config.PREFIX}dmenu`, buttonText: { displayText: '📥 Download Menu' }, type: 1 },
             { buttonId: `${config.PREFIX}gmenu`, buttonText: { displayText: '👥 Group Menu' }, type: 1 },
-            { buttonId: `${config.PREFIX}fmenu`, buttonText: { displayText: '😄 Fun Menu' }, type: 1 },
-            { buttonId: `${config.PREFIX}omenu`, buttonText: { displayText: '👑 Owner Menu' }, type: 1 },
-            { buttonId: `${config.PREFIX}aimenu`, buttonText: { displayText: '🤖 AI Menu' }, type: 1 },
-            { buttonId: `${config.PREFIX}amenu`, buttonText: { displayText: '🎎 Anime Menu' }, type: 1 },
-            { buttonId: `${config.PREFIX}cmenu`, buttonText: { displayText: '🔄 Convert Menu' }, type: 1 },
-            { buttonId: `${config.PREFIX}omenu2`, buttonText: { displayText: '📌 Other Menu' }, type: 1 },
-            { buttonId: `${config.PREFIX}rmenu`, buttonText: { displayText: '💞 Reactions Menu' }, type: 1 },
-            { buttonId: `${config.PREFIX}mmenu`, buttonText: { displayText: '🏠 Main Menu' }, type: 1 },
+            { buttonId: `${config.PREFIX}fmenu`, buttonText: { displayText: '😄 Fun Menu' }, type: 1 }
         ];
-        
+
         const buttonMessage = {
             image: { url: config.MENU_IMAGE_URL || 'https://res.cloudinary.com/df2rnoijw/image/upload/v1752740024/bankl0exnr8remsz8t32.jpg' },
             caption: menuCaption,
@@ -60,6 +50,9 @@ cmd({
 
         await conn.sendMessage(from, buttonMessage, { quoted: mek });
 
+        // Other sub-menu options can be handled via a reply system or a separate command.
+        // For example, you can add a new command like ".menu2" for the rest of the buttons.
+        
     } catch (e) {
         console.error('Menu Error:', e);
         reply(`❌ Menu system is currently busy. Please try again later.\n\n> ${config.DESCRIPTION}`);
