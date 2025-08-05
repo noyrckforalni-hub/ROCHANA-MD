@@ -28,9 +28,7 @@ async (conn, mek, m, { from, sender, reply }) => {
 > ${config.DESCRIPTION}`;
         
         const buttons = [
-            // MENU බොත්තම
             { buttonId: `${config.PREFIX}menu`, buttonText: { displayText: '🧚‍♂️ GET MENU' }, type: 1 },
-            // SETTINGS බොත්තම
             { buttonId: `${config.PREFIX}sc`, buttonText: { displayText: '⚙️ CHECK SETTINGS' }, type: 1 }
         ];
 
@@ -39,11 +37,9 @@ async (conn, mek, m, { from, sender, reply }) => {
             caption: status,
             footer: 'Press a button to navigate.',
             buttons: buttons,
-            headerType: 4,
+            headerType: 4, 
             contextInfo: {
                 mentionedJid: [m.sender],
-                forwardingScore: 1000,
-                isForwarded: true
             }
         };
 
