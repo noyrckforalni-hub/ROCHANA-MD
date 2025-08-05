@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+  # Pair repository එකෙන් session update වූ පසු මෙය run වේ
   workflow_dispatch:
 
 jobs:
@@ -17,8 +18,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
-          # මෙතනින් තමයි token එක checkout action එකට දෙන්නේ
-          token: ${{ secrets.REPO_TOKEN }}
+          # මෙතනදී අපි GitHub විසින් ස්වයංක්‍රීයව ලබාදෙන Token එක භාවිතා කරමු
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
