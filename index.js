@@ -876,31 +876,30 @@ ${trueFalseSettings.map((key, index) => `│ ${index + 1}. *${key}:* \`\`\`${con
     );
   };
 
-  // Status aka brio
-  conn.setStatus = status => {
-    conn.query({
-      tag: 'iq',
-      attrs: {
-        to: '@s.whatsapp.net',
-        type: 'set',
-        xmlns: 'status',
+// Status aka brio
+conn.setStatus = status => {
+  conn.query({
+    tag: 'iq',
+    attrs: {
+      to: '@s.whatsapp.net',
+      type: 'set',
+      xmlns: 'status',
+    },
+    content: [
+      {
+        tag: 'status',
+        attrs: {},
+        content: Buffer.from(status, 'utf-8'),
       },
-      content: [
-        {
-          tag: 'status',
-          attrs: {},
-          content: Buffer.from(status, 'utf-8'),
-        },
-      ],
-    });
-    return status;
-  };
-  conn.serializeM = mek => sms(conn, mek, store);
-}
+    ],
+  });
+  return status;
+};
+
+conn.serializeM = mek => sms(conn, mek, store);
 
 // Auto restart mechanism (every 5 hours to stay within GitHub Actions limits)
 const autoRestartInterval = 4 * 60 * 60 * 1000;
-
 
 setInterval(() => {
   try {
@@ -914,11 +913,12 @@ setInterval(() => {
   }
 }, autoRestartInterval);
 
-
 app.get("/", (req, res) => {
   res.send("ROCHANA MD STARTED ✅");
 });
+
 app.listen(port, () => console.log(`Server listening on port http://localhost:${port}`));
+
 setTimeout(() => {
   connectToWA();
 }, 4000);
