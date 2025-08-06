@@ -177,6 +177,84 @@ async function connectToWA() {
 
   conn.ev.on("group-participants.update", (update) => GroupEvents(conn, update));
 
+//_________
+
+// index.js (conn.ev.on('messages.upsert') ඇතුළත)
+if (text === '.edu' || text === '.education') {
+  const subjectList = Object.keys(educationData.subjects).map(sub => ({
+    title: educationData.subjects[sub].name,
+    description: `ප්‍රශ්න පත්‍ර සහ සටහන් ලබා ගන්න`,
+    rowId: `.edu ${sub}`
+  }));
+
+  await conn.sendMessage(jid, {
+    text: "📚 *ROCHANA Education Bot*",
+    sections: [{
+      title: "විශය තෝරන්න",
+      rows: subjectList
+    }],
+    footer: "POWERED BY ROCHANA-MD ©"
+  }, { quoted: mek });
+}
+
+// විශය තෝරාගත් පසු (e.g., .edu sinhala)
+else if (text.startsWith('.edu ')) {
+  const subjectKey = text.split(' ')[1];
+  const subject = educationData.subjects[subjectKey];
+
+  if (subject) {
+    await conn.sendMessage(jid, {
+      text: `📖 *${subject.name}*\n\nමොනවා අවශ්‍යද?`,
+      buttons: [
+        { buttonId: `.q ${subjectKey}`, buttonText: { displayText: "ප්‍රශ්න" }, type: 1 },
+        { buttonId: `.notes ${subjectKey}`, buttonText: { displayText: "Short Notes" }, type: 1 }
+      ],
+      footer: "POWERED BY ROCHANA-MD ©"
+    }, { quoted: mek });
+  }
+}
+
+// ප්‍රශ්න ඉල්ලීම (e.g., .q sinhala)
+else if (text.startsWith('.q ')) {
+  const subjectKey = text.split(' ')[1];
+  const questions = educationData.subjects[subjectKey]?.questions || [];
+  const randomQ = questions[Math.floor(Math.random() * questions.length)];
+
+  if (randomQ) {
+    await conn.sendMessage(jid, {
+      text: `📝 *ප්‍රශ්නය*: ${randomQ.question}\n\nඅභියෝග:`,
+      buttons: randomQ.options.map((opt, i) => ({
+        buttonId: `.ans ${subjectKey} ${i}`,
+        buttonText: { displayText: opt },
+        type: 1
+      })),
+      footer: "POWERED BY ROCHANA-MD ©"
+    }, { quoted: mek });
+  }
+}
+
+// Short notes ඉල්ලීම (e.g., .notes maths)
+else if (text.startsWith('.notes ')) {
+  const subjectKey = text.split(' ')[1];
+  const notes = educationData.subjects[subjectKey]?.notes || [];
+  const randomNote = notes[Math.floor(Math.random() * notes.length)];
+
+  await conn.sendMessage(jid, {
+    text: `📔 *${educationData.subjects[subjectKey]?.name} - Short Note*\n\n${randomNote}\n\nPOWERED BY ROCHANA-MD ©`
+  }, { quoted: mek });
+}
+
+// පිළිතුරු පරීක්ෂාව (e.g., .ans sinhala 0)
+else if (text.startsWith('.ans ')) {
+  const [_, subjectKey, ansIndex] = text.split(' ');
+  const correctAns = educationData.subjects[subjectKey]?.questions[0]?.answer;
+
+  await conn.sendMessage(jid, {
+    text: `✅ *නිවැරදි පිළිතුර:* ${correctAns}\n\nPOWERED BY ROCHANA-MD ©`
+  }, { quoted: mek });
+}
+
+//________
   //=============readstatus=======
 
   conn.ev.on('messages.upsert', async (mek) => {
