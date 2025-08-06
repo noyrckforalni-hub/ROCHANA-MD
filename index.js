@@ -898,7 +898,7 @@ conn.setStatus = status => {
 
 conn.serializeM = mek => sms(conn, mek, store);
 
-// Auto restart mechanism (every 5 hours to stay within GitHub Actions limits)
+// Auto restart mechanism
 const autoRestartInterval = 4 * 60 * 60 * 1000;
 
 setInterval(() => {
@@ -913,12 +913,14 @@ setInterval(() => {
   }
 }, autoRestartInterval);
 
+// Express server
 app.get("/", (req, res) => {
   res.send("ROCHANA MD STARTED ✅");
 });
 
 app.listen(port, () => console.log(`Server listening on port http://localhost:${port}`));
 
+// Start WhatsApp connection
 setTimeout(() => {
   connectToWA();
 }, 4000);
