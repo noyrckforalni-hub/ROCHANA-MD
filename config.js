@@ -51,7 +51,7 @@ ALIVE_IMG: process.env.ALIVE_IMG || "https://res.cloudinary.com/df2rnoijw/image/
 // add img for alive msg
 LIVE_MSG: process.env.LIVE_MSG || "> I'm alive now *ROCHANA-MD*⚡",
 // add alive msg here 
-READ_MESSAGE: process.env.READ_MESSAGE || "false",
+READ_MESSAGE: process.env.READ_MESSAGE || "true",
 // Turn true or false for automatic read msgs
 AUTO_REACT: process.env.AUTO_REACT || "false",
 // make this true or false for auto react on all msgs
