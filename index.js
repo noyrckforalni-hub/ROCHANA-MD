@@ -177,6 +177,25 @@ async function connectToWA() {
 
   conn.ev.on("group-participants.update", (update) => GroupEvents(conn, update));
 
+
+conn.ev.on('messages.upsert', async (mek) => {
+    mek = mek.messages[0];
+    // Button responses
+if (msg.message?.buttonsResponseMessage) {
+  const buttonId = msg.message.buttonsResponseMessage.selectedButtonId;
+  const jid = msg.key.remoteJid;
+
+  if (buttonId === 'id_menu') {
+    // Trigger .menu command
+    await conn.sendMessage(jid, { text: '.menu' });
+    console.log("Menu button clicked");
+  } 
+  else if (buttonId === 'id_settings') {
+    // Trigger .sc command
+    await conn.sendMessage(jid, { text: '.sc' });
+    console.log("Settings button clicked");
+  }
+}
   //=============readstatus=======
 
   conn.ev.on('messages.upsert', async (mek) => {
